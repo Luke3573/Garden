@@ -10,9 +10,9 @@ while True:
     otherwise the program will break from the loop"""
     if p != 0:
         continue
-        call("clear", shell=True)
+#        call("clear", shell=True)
     else:
-        call("clear", shell=True)
+#        call("clear", shell=True)
         break
 
 
