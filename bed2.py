@@ -73,6 +73,18 @@ def main():
         time.sleep(2)
         main()
 
+def sched():
+#    *********time call**********
+        hour = time.time()
+        print(hour)
+        if hour == time1 && minute == time2:
+        database = firebase1.database()
+        gardenMonitoring.child("GMS").child("valveStatus").set("1")
+        
+    else:
+        database = firebase1.database()
+        gardenMonitoring.child("GMS").child("valveStatus").set("1")
+        main()
 
 sensor = 0
 temperature = 1
