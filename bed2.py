@@ -28,8 +28,8 @@ def main():
             humidity = humidity
             time.sleep(1)
         else:
-            temperature = temperature
-            humidity = humidity
+            temperature = "FLT"
+            humidity = "FLT"
             time.sleep(3);
 
     if True:
