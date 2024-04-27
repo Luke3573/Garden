@@ -23,7 +23,7 @@ call("sudo apt install python3 GPIO -y", shell=True)
 time.sleep(2)
 call("pip3 install piicodev", shell=True)
 time.sleep(2)
-call""(sudo apt install git -y"", shell=True)
+call("sudo apt install git -y", shell=True)
 time.sleep(2)
 call("pip3 install piicodev -y", shell=True)
 
