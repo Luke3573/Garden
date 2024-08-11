@@ -59,24 +59,26 @@ def main():
         print ("data fail")
         main()
 
-    if valveStatus == "1":
-        GPIO.output(17, 1)
-        systemActive = "1"
-        print ("set valve 1")
-  #      main()
-    elif valveStatus == "0":
-        GPIO.output(17, 0)
-        systemActive = "0"
-        print ("set valve 0")
+    if True: # set the status of the water valve
+        
+        if valveStatus == "1":
+            GPIO.output(17, 1)
+            systemActive = "1"
+            print ("set valve 1")
+      #      main()
+        elif valveStatus == "0":
+            GPIO.output(17, 0)
+            systemActive = "0"
+            print ("set valve 0")
+    
+     #       main()
+        else:
+            time.sleep(2)
+            print ("set valve fail")
+            main()
 
- #       main()
-    else:
-        time.sleep(2)
-        print ("set valve fail")
-        main()
 
-
-    if True:
+    if True:   # used to clear the cache and clear the terminal to clear memory
         current_time = time.time()
         local_time = time.localtime(current_time)
 
