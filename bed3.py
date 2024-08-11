@@ -9,6 +9,7 @@ def main():
     import serial
     from PiicoDev_TMP117 import PiicoDev_TMP117
     from PiicoDev_Unified import sleep_ms
+    from subprocess import call
 
     sensorA = PiicoDev_TMP117(asw=[1, 0, 0, 0])
     GPIO.setwarnings(False)
