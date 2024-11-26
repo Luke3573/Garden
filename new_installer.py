@@ -34,5 +34,5 @@ time.sleep(2)
 call("pip3 install --upgrade gcloud --break-system-packages", shell=True)
 time.sleep(2)
 call("pip3 install pycryptodome==3.4.3 --break-system-packages", shell=True)
-
+time.sleep(2)
 call("pip3 install pyrebase --break-system-packages", shell=True)
