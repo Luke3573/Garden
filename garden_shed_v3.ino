@@ -22,10 +22,23 @@
 
 #include "secrets.h"
 #include <Firebase.h>
+#include <MCP3008.h>
+
+//Configuration.SetPinFunction(23, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(19, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(18, DeviceFunction.SPI1_CLOCK);
 
 int tank1 = 34;
 float level;
 float levels;
+
+#define CS_PIN 5
+#define CLOCK_PIN 18
+#define MOSI_PIN 23
+#define MISO_PIN 19
+
+// put pins inside MCP3008 constructor
+MCP3008 adc(CLOCK_PIN, MOSI_PIN, MISO_PIN, CS_PIN);
 
 /* Use the following instance for Test Mode (No Authentication) */
 Firebase fb(REFERENCE_URL);
@@ -48,11 +61,13 @@ void setup() {
 
 void tank() {
 
-  level = analogRead(tank1);
+  //level = analogRead(tank1);
+  level = adc.readADC(0); // read Chanel 0 from MCP3008 ADC
   Serial.println(level);
-  level = map(level, 425, 1030, 0, 100);
+  level = map(level, 87, 188, 0, 100);
   Serial.println(level);
-  levels = analogRead(tank1);
+  //levels = analogRead(tank1);
+  levels = adc.readADC(0); // read Chanel 0 from MCP3008 ADC
 
   WiFi.disconnect();
   delay(1000);
