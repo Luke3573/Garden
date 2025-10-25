@@ -1,0 +1,52 @@
+//ESP32 Firebase
+#include <WiFi.h>
+#include <Firebase_ESP_Client.h>
+#include <addons/RTDBHelper.h>
+
+// Wi-Fi credentials
+#define WIFI_SSID "Luke3573"
+#define WIFI_PASSWORD "20062578"
+
+// Firebase credentials
+#define DATABASE_URL "https://home-garden-25b17.firebaseio.com/"
+#define DATABASE_SECRET "AIzaSyB_2lt7J9iazmvtS8Wxw_GTH_Qo37HAT3c"
+
+// Firebase objects
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
+
+unsigned long dataMillis = 0;
+int count = 0;
+
+void setup() {
+  Serial.begin(115200);
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(300);
+  }
+
+  Serial.println();
+  Serial.print("Connected with IP: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
+
+  config.database_url = DATABASE_URL;
+  config.signer.tokens.legacy_token = DATABASE_SECRET;
+
+  Firebase.reconnectNetwork(true);
+  fbdo.setBSSLBufferSize(4096, 1024);
+  Firebase.begin(&config, &auth);
+}
+
+void loop() {
+  if (millis() - dataMillis > 5000) {
+    dataMillis = millis();
+    bool result = Firebase.RTDB.setInt(&fbdo, "/esp32/TesteR", count++);
+    Serial.printf("Uploading count: %s\n", result ? "ok" : fbdo.errorReason().c_str());
+  }
+}
