@@ -6,8 +6,10 @@
 #include <Adafruit_Sensor.h>
 
 // Wi-Fi credentials
-#define WIFI_SSID "Luke3573"
-#define WIFI_PASSWORD "20062578"
+//#define WIFI_SSID "Luke3573"
+//#define WIFI_PASSWORD "20062578"
+#define WIFI_SSID "Garden"
+#define WIFI_PASSWORD "6354207C7A"
 
 // Firebase Credentials
 #define REFERENCE_URL "https://home-garden-25b17.firebaseio.com/"
@@ -20,11 +22,12 @@ Adafruit_TMP117  tmp117;
 
 unsigned long dataMillis = 0;
 int count = 0;
+int count2 = 0;
 
 //INPUTS
 int onSwitch = 27;
 int offSwitch = 4;
-int mainValve = 25;
+const int mainValve = 25;
 int coValve = 26;
 int tankLevel = 34;
 
@@ -91,7 +94,7 @@ void loop() {
     //Update Firebase readings
     fb.setFloat("GMS/temperature", temp.temperature);
     fb.setFloat("GMS/systemActive", valveStatus);
-    fb.setFloat("GMS/tankLevel", level);
+    //fb.setFloat("GMS/tankLevel", level);
 
     //Read System activation status
     Valvestatus = fb.getInt("GMS/valveStatus", valveStatus);
@@ -114,10 +117,12 @@ void loop() {
     //System Valve Timer
     if (valveStatus >= 1){
       count ++;
+      analogWrite(mainValve, 255);
       fb.setInt("GMS/humidity", count);
     }
     if (valveStatus <= 0){
       count = 0;
+      analogWrite(mainValve, 0);
       fb.setInt("GMS/humidity", count);
       fb.setInt("GMS/fans", 0);
     }
@@ -126,26 +131,14 @@ void loop() {
       fb.setInt("GMS/fans", 0);
     }
 
-
-
-
-   
+    // system reboot every 3 hours
+    count2 ++;
+    if (count2 >= 600){
+      ESP.restart();
+    }
+    Serial.println(count2);
+    Serial.println(count);
     
 
-
-
-/* - ******************************firebase examples**********************8
-
-    fb.setFloat("GMS/humidity", count++);
-    Serial.println(count);
-
-
-    int temp;
-    temps = fb.getInt("GMS/maxtemp", temp);
-    Serial.print("Get Int - Response Code: ");
-    Serial.println(temps);
-    Serial.print("Retrieved Int: ");
-    Serial.println(temp);
-*/
   }
 }
