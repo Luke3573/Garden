@@ -19,16 +19,16 @@ void loop() {
   
   volt = voltSense;
 
-  if (volt <= 550) {
+  if (volt <= 600) {
     count = 0;
-    digitalWrite(res, HIGH);
+    digitalWrite(res, LOW);
     digitalWrite(light, LOW);
     voltStatus = 0;
   }
   if (voltStatus == 0){
     count = 0;
     if (volt >= 850){
-      digitalWrite(res, LOW);
+      digitalWrite(res, HIGH);
       voltStatus = 1;
 
     }
@@ -37,10 +37,10 @@ void loop() {
     count ++;
   }
   if (count >= 14400){
-    digitalWrite(res, HIGH);
+    digitalWrite(res, LOW);
     digitalWrite(light, LOW);
     delay(1000);
-    digitalWrite(res, LOW);
+    digitalWrite(res, HIGH);
     digitalWrite(light, HIGH);
   }
 
