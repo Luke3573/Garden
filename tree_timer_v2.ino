@@ -17,32 +17,39 @@ void setup() {
 void loop() {
   
   
-  volt = voltSense;
-
+  volt = analogRead(voltSense);
+  Serial.println(volt);
+  Serial.println(count);
+  Serial.println(voltStatus);
+  delay(1000);
+  
   if (volt <= 600) {
     count = 0;
-    digitalWrite(res, LOW);
+    digitalWrite(res, HIGH);
     digitalWrite(light, LOW);
     voltStatus = 0;
+    Serial.println("test1");
   }
   if (voltStatus == 0){
     count = 0;
+    Serial.println("test2");
     if (volt >= 850){
-      digitalWrite(res, HIGH);
+      digitalWrite(res, LOW);
       voltStatus = 1;
 
     }
   }
   if (voltStatus == 1){
     count ++;
+    delay(1000);
   }
   if (count >= 14400){
-    digitalWrite(res, LOW);
+    digitalWrite(res, HIGH);
     digitalWrite(light, LOW);
     delay(1000);
-    digitalWrite(res, HIGH);
+    digitalWrite(res, LOW);
     digitalWrite(light, HIGH);
+    count = 0;
   }
 
 }
-
